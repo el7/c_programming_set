@@ -1,0 +1,7 @@
+
+
+- change ints to unsigned longlongs (or largest possible vlaued number
+  variables)
+
+- check all user input for boundary cases
+
