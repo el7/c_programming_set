@@ -10,17 +10,23 @@ int start(int val){
 			p = 0;
 	}
 	if (p == 0)
-		printf("Not prime\n");
+		printf("%d is NOT prime\n", val);
 	else
-		printf("Prime\n");
+		printf("%d IS prime\n", val);
 
 	return 0;
 }
 
 
-int main(int argc, char **argv){
+void desc(){
 	printf("\n\n");
+	printf("A prime number is a natural number greater than 1 \n");
+	printf("that has no positive divisors other than 1 and itself. ");
+	printf("\n\n");
+}
 
+int main(int argc, char **argv){
+	desc();
 	int val = 0;
 	if (argc < 2){
 		printf("Enter an integer to check for prime value:\n> ");

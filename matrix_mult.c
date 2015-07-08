@@ -55,8 +55,8 @@ int start(){
 	int choice = 0;
 	int matrix_a_x = 0, matrix_b_x = 0;
 	int matrix_a_y = 0, matrix_b_y = 0;
-	printf("Are you looking for (1)scalar multiplication or (2)matrix product?\n> ");
-	scanf("%d", &choice);
+//	printf("Are you looking for \n(1)scalar multiplication or \n(2)matrix product?\n> ");
+//	scanf("%d", &choice);
 
 	printf("We will work with only 2 matricies. How big will each matrix be?\n");
 	printf("Matrix A (x):\n> ");
