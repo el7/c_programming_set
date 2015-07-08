@@ -6,8 +6,13 @@
 - check all user input for boundary cases
 
 - add desc() function to programs
+	(also add examples with desc()
 
 - add recycle feature to programs
+
+- add menu functionality
+
+- print (describe) the process in a meaningful way.
 
 
 

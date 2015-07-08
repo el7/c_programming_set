@@ -5,9 +5,9 @@ int start(){
 	
 	char i = NULL;
 	printf("Enter a character to see if it's a vowel.\n");
-	printf("(enter z to exit. I'll give you a hint, it's not a vowel.\n");
+	printf("(enter 1 to exit. I'll give you a hint, it's not a vowel.)\n");
 
-	while(i != 'z'){
+	while(i != '1'){
 		printf("> ");
 		scanf("%c", &i);
 		while ( getchar() != '\n' );

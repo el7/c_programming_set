@@ -2,15 +2,23 @@
 #include <stdlib.h>
 #include <math.h>
 
+void desc(){
+
+	printf("(Armstrong property: a number is broken into its\n");
+	printf("individual digits, then those digits are cubed, then summed.\n");
+	printf("If the sum equals the original number, it's an armstrong number.\n");
+	printf("example: 153 = (1^3) + (5^3) + (3^3)\n\n");
+
+}
+
+
+
 int start(){
 	
 	int input = 0;
 	int temp = 0;
 	int sum = 0;
-
-	printf("(Armstrong property: a number is broken into its\n");
-	printf("individual digits, then those digits are cubed, then summed.\n");
-	printf("If the sum equals the original number, it's an armstrong number.\n\n");
+	desc();
 	printf("Enter a number to check for the armstrong property:\n> ");
 	scanf("%d", &input);
 
