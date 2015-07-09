@@ -193,8 +193,18 @@ int start(){
 	return 0;
 }
 
+void desc(){
+	printf("----------------------------------------------------------------\n");
+	printf("A deque (or dequeue, short for double-ended-queue) is an ADT\n");
+	printf("(abstract data type) which can have elements added and removed\n");
+	printf("from both the front and the back.\n");
+	printf("----------------------------------------------------------------\n");
+	printf("\n");
+}
+
 int main(){
 	printf("\n\n");
+	desc();
 	start();
 	printf("\n\n");
 	return 0;

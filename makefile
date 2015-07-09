@@ -18,8 +18,6 @@ complete:
 	gcc -std=c99 perfect_number.c -o perfect_num.prog
 	gcc -std=c99 largest_among_n.c -o largest.prog
 	gcc -std=c99 leap_year.c -o leap_year.prog
-	gcc -std=c99 deque.c -o deque.prog
-	gcc -std=c99 singly_linked_list.c -o singly_ll.prog		
 	gcc -std=c99 primes.c -o primes.prog
 	gcc -std=c99 bubble_sort.c -o bub_sort.prog
 
@@ -29,8 +27,10 @@ test:
 
 
 
-## in progress
+## in progress, near or far from done
 not_done:
+	gcc -std=c99 singly_linked_list.c -o singly_ll.prog		
+	gcc -std=c99 deque.c -o deque.prog
 	gcc -std=c99 binary_search.c -o bin_search.prog			
 	gcc -std=c99 quick_sort.c -o qsort.prog
 	gcc -std=c99 doubly_linked_list.c -o doubly_ll.prog		
