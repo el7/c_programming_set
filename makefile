@@ -2,13 +2,13 @@
 
 default: all
 
-all: splash complete test not_done
+all: splash complete test
 
 splash:
 	@toilet --gay "c programs"
 
 
-# program works but could be improved
+## program works (potentially well) but could be improved
 complete:
 	gcc -std=c99 fibonacci_series.c -o fib.prog
 	gcc -std=c99 armstrong_number.c -o arm_numb.prog -lm		
@@ -20,9 +20,11 @@ complete:
 	gcc -std=c99 leap_year.c -o leap_year.prog
 	gcc -std=c99 primes.c -o primes.prog
 	gcc -std=c99 bubble_sort.c -o bub_sort.prog
+	gcc -std=c99 factorial.c -o fact.prog
+	gcc -std=c99 tower_of_hanoi.c -o hanoi.prog
 
 
-## program does not work and is being tested
+## program is being tested
 test:
 
 
@@ -36,7 +38,6 @@ not_done:
 	gcc -std=c99 doubly_linked_list.c -o doubly_ll.prog		
 	gcc -std=c99 palindrome.c -o palindrome.prog			
 	gcc -std=c99 matrix_mult.c -o matrix_mult.prog			
-	gcc -std=c99 tower_of_hanoi.c -o hanoi.prog
 
 
 ## will do these after others are done
@@ -51,7 +52,6 @@ questionable:
 	circularly_linked_list.c
 	copy_the_string.c
 	even_odd.c
-	factorial.c
 	file_IO.c
 	floyd_triangle.c
 	full_in-threaded_BST_ins_del_trav.c
