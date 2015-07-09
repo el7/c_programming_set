@@ -1,9 +1,6 @@
-
-
-- change ints to unsigned longlongs (or largest possible vlaued number
-  variables)
-
-- check all user input for boundary cases
+---------------------------------
+(in order of reletive importance)
+---------------------------------
 
 - add desc() function to programs
 	(also add examples with desc()
@@ -14,5 +11,15 @@
 
 - print (describe) the process in a meaningful way.
 
+- change ints to unsigned longlongs (or largest possible vlaued number
+  variables)
+
+- warn about max/min numbers
+
+- check all user input for boundary cases
+
+- add command line arguments functionality
+
+- add comments LOL
 
 
