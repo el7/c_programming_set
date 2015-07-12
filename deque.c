@@ -17,19 +17,19 @@ struct node{
 
 int view_back(struct keeper *keeper){
 
-	printf("|----|----|\n");
-	printf("| id:  %d  |\n", keeper->tail->id);
-	printf("| val: %d  |\n", keeper->tail->payload);
-	printf("|----|----|\n");
+	printf("--------\n");
+	printf("id:  %d\n", keeper->tail->id);
+	printf("val: %d\n", keeper->tail->payload);
+	printf("--------\n");
 
 	return 0;
 }
 
 int view_front(struct keeper *keeper){
-	printf("|----|----|\n");
-	printf("| id:  %d  |\n", keeper->head->id);
-	printf("| val: %d  |\n", keeper->head->payload);
-	printf("|----|----|\n");
+	printf("--------\n");
+	printf("id:  %d\n", keeper->head->id);
+	printf("val: %d\n", keeper->head->payload);
+	printf("--------\n");
 
 return 0;
 }
@@ -41,10 +41,10 @@ int view_list(struct keeper *keeper){
 
 	printf("\n");
 	while(cur != NULL){
-		printf("|----|----|\n");
-		printf("| id:  %d  |\n", cur->id);
-		printf("| val: %d  |\n", cur->payload);
-		printf("|----|----|\n");
+		printf("--------\n");
+		printf("id:  %d\n", cur->id);
+		printf("val: %d\n", cur->payload);
+		printf("--------\n");
 		cur = cur->next;
 	}
 	printf("\n");
@@ -54,8 +54,10 @@ int view_list(struct keeper *keeper){
 
 int remove_node_back(struct keeper *keeper){
 
+
 	if(keeper->tail != NULL){
 		keeper->tail = keeper->tail->prev;
+		printf("\nHERE\n");
 		free(keeper->tail->next);
 		keeper->tail->next = NULL;
 	} else printf("Deque is empty.\n");
@@ -104,10 +106,10 @@ int add_node_back(struct keeper *keeper){
 
 int add_node_front(struct keeper *keeper){
 
-	int id = keeper->top_id+1;
-	keeper->top_id = id;
 	int payload = 0;
 	struct node *new_node;
+	int id = keeper->top_id+1;
+	keeper->top_id = id;
 	new_node = (struct node*) malloc(sizeof(struct node));
 	new_node->prev = NULL;
 
@@ -133,16 +135,19 @@ int add_node_front(struct keeper *keeper){
 int menu(){
 
 	int selection = 0;
-	printf("Select a function:\n");
-	printf(" 0. Add node to back\n");
-	printf(" 1. Add node to front\n");
+	printf(" Select a function:\n");
 	printf(" --------------------\n");
-	printf(" 2. Remove node from back\n");
-	printf(" 3. Remove node from front\n");
+	printf(" 1. Add node to back\n");
+	printf(" 2. Add node to front\n");
+	printf(" --------------------\n");
+	printf(" 3. Remove node from back\n");
+	printf(" 4. Remove node from front\n");
 	printf(" -------------------------\n");
-	printf(" 4. Examine last element\n");
-	printf(" 5. Examine first element\n");
-	printf(" 6. Examine all elements\n");
+	printf(" 5. Examine last element\n");
+	printf(" 6. Examine first element\n");
+	printf(" 7. Examine all elements\n");
+	printf(" -------------------------\n");
+	printf(" 0. Exit\n");
 	printf("> ");
 
 	scanf("%d", &selection);
@@ -159,36 +164,36 @@ int start(){
 	keeper->tail = NULL;
 
 	int selection = 0;
-	while(selection != -1){
+	do{
 		selection = menu();
 		switch(selection){
-			case 0:
+			case 1:
 					add_node_back(keeper);
 					break;
-			case 1:
+			case 2:
 					add_node_front(keeper);
 					break;
-			case 2:
+			case 3:
 					remove_node_back(keeper);
 					break;
-			case 3:
+			case 4:
 					remove_node_front(keeper);
 					break;
-			case 4:
+			case 5:
 					view_back(keeper);
 					break;
-			case 5:
+			case 6:
 					view_front(keeper);
 					break;
-			case 6:
+			case 7:
 					view_list(keeper);
 					break;
-			case -1:
+			case 0:
 					break;
 			default:
 					break;
 		}
-	}
+	}while(selection != 0);
 
 	return 0;
 }

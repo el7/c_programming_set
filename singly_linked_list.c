@@ -58,6 +58,7 @@ int add_node(struct node *head){
 	scanf("%d", &payload);
 	new_node->payload = payload;
 	new_node->id = id+1;
+	printf("\n");
 
 	return 0;
 }
@@ -67,14 +68,15 @@ int menu(){
 
 	int selection = 0;
 	printf("Select a function:\n");
-	printf(" 0. Add node\n");
-	printf(" 1. Remove node\n");
-	printf(" 2. View list\n");
-	printf(" 3. \n");
-	printf("-1. Exit\n");
+	printf(" 1. Add node\n");
+	printf(" 2. Remove node\n");
+	printf(" 3. View list\n");
+	printf(" 4. \n");
+	printf(" 0. Exit\n");
 	printf("> ");
 
 	scanf("%d", &selection);
+	printf("\n");
 	return selection;
 }
 
@@ -88,32 +90,41 @@ int start(){
 	head->id = 0;
 
 	int selection = 0;
-	while(selection != -1){
+
+	do{
 		selection = menu();
 		switch(selection){
-			case 0:
+			case 1:
 					add_node(head);
 					break;
-			case 1:
+			case 2:
 					remove_node(head);
 					break;
-			case 2:
+			case 3:
 					view_list(head);
 					break;
-			case 3:
+			case 4:
 					break;
-			case -1:
+			case 0:
 					break;
 			default:
 					break;
 		}
-	}
+
+	}while(selection != 0);
 
 	return 0;
 }
 
+
+void desc(){
+
+
+}
+
 int main(){
 	printf("\n\n");
+	desc();
 	start();
 	printf("\n\n");
 	return 0;

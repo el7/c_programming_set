@@ -15,11 +15,14 @@ struct node{
 int view_list(struct node *head){
 
 	head = head->next;
+	printf("--------\n");
 	while(head != NULL){
 		printf("id:  %d\n", head->id);
-		printf("val: %d\n\n", head->payload);
+		printf("val: %d\n", head->payload);
+		printf("--------\n");
 		head = head->next;
 	}
+	printf("\n");
 
 	return 0;
 }
@@ -61,6 +64,7 @@ int add_node(struct node *head){
 	new_node->next = NULL;
 	printf("What value is the payload?\n> ");
 	scanf("%d", &payload);
+	printf("\n");
 	new_node->payload = payload;
 	new_node->id = id+1;
 
@@ -72,14 +76,15 @@ int menu(){
 
 	int selection = 0;
 	printf("Select a function:\n");
-	printf(" 0. Add node\n");
-	printf(" 1. Remove node\n");
-	printf(" 2. View list\n");
-	printf(" 3. \n");
-	printf("-1. Exit\n");
+	printf(" 1. Add node\n");
+	printf(" 2. Remove node\n");
+	printf(" 3. View list\n");
+	printf(" 4. \n");
+	printf(" 0. Exit\n");
 	printf("> ");
 
 	scanf("%d", &selection);
+	printf("\n");
 	return selection;
 }
 
@@ -96,18 +101,18 @@ int start(){
 	while(selection != -1){
 		selection = menu();
 		switch(selection){
-			case 0:
+			case 1:
 					add_node(head);
 					break;
-			case 1:
+			case 2:
 					remove_node(head);
 					break;
-			case 2:
+			case 3:
 					view_list(head);
 					break;
-			case 3:
+			case 4:
 					break;
-			case -1:
+			case 0:
 					break;
 			default:
 					break;
@@ -117,8 +122,13 @@ int start(){
 	return 0;
 }
 
+void desc(){
+
+}
+
 int main(){
 	printf("\n\n");
+	desc();
 	start();
 	printf("\n\n");
 	return 0;
