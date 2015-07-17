@@ -30,7 +30,6 @@ linked_structures:
 	gcc -std=c99 singly_linked_list.c -o singly_ll.prog		
 	gcc -std=c99 doubly_linked_list.c -o doubly_ll.prog		
 
-
 searching:
 
 sorting:
@@ -45,6 +44,7 @@ complete: linked_structures puzzle mathy searching sorting basic
 test:
 	gcc -std=c99 quick_sort.c -o qsort.prog
 	gcc -std=c99 deque.c -o deque.prog
+	gcc -std=c99 file_IO.c -o file_io.prog
 
 
 ## in progress, near or far from done
@@ -79,7 +79,6 @@ questionable:
 	strongs_numbers.c
 	#basic
 	swap_numbers.c
-	file_IO.c
 	power_of_given.c
 	random_num_gen.c
 	swap_string.c
