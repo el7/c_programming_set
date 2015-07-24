@@ -15,31 +15,48 @@ struct node{
 };
 
 
-int view_back(struct keeper *keeper){
+int peek_back(struct keeper *keeper){
 
-	printf("--------\n");
-	printf("id:  %d\n", keeper->tail->id);
-	printf("val: %d\n", keeper->tail->payload);
-	printf("--------\n");
+	struct node *cur;
+	cur = keeper->head;
+
+	if (cur != NULL){
+		printf("--------\n");
+		printf("id:  %d\n", cur->id);
+		printf("val: %d\n", cur->payload);
+		printf("--------\n");
+	} else printf("\nList is empty!\n");
+	printf("\n");
 
 	return 0;
 }
 
-int view_front(struct keeper *keeper){
-	printf("--------\n");
-	printf("id:  %d\n", keeper->head->id);
-	printf("val: %d\n", keeper->head->payload);
-	printf("--------\n");
+int peek_front(struct keeper *keeper){
+
+	struct node *cur;
+	cur = keeper->head;
+
+	if (cur != NULL){
+		printf("--------\n");
+		printf("id:  %d\n", cur->id);
+		printf("val: %d\n", cur->payload);
+		printf("--------\n");
+	} else printf("\nList is empty!\n");
+
+	printf("\n");
 
 return 0;
 }
 
-int view_list(struct keeper *keeper){
+int peek_list(struct keeper *keeper){
 
 	struct node *cur;
 	cur = keeper->head;
 
 	printf("\n");
+	if (cur == NULL)
+		printf("List is empty!\n");
+
 	while(cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -52,7 +69,7 @@ int view_list(struct keeper *keeper){
 	return 0;
 }
 
-int remove_node_back(struct keeper *keeper){
+int pop_back(struct keeper *keeper){
 
 
 	if(keeper->tail != NULL){
@@ -65,7 +82,7 @@ int remove_node_back(struct keeper *keeper){
 	return 0;
 }
 
-int remove_node_front(struct keeper *keeper){
+int pop_front(struct keeper *keeper){
 
 	if(keeper->head != NULL){
 		keeper->head = keeper->head->next;
@@ -77,7 +94,7 @@ int remove_node_front(struct keeper *keeper){
 }
 
 
-int add_node_back(struct keeper *keeper){
+int push_back(struct keeper *keeper){
 
 	int id = keeper->top_id+1;
 	keeper->top_id = id;
@@ -104,7 +121,7 @@ int add_node_back(struct keeper *keeper){
 	return 0;
 }
 
-int add_node_front(struct keeper *keeper){
+int push_front(struct keeper *keeper){
 
 	int payload = 0;
 	struct node *new_node;
@@ -135,19 +152,19 @@ int add_node_front(struct keeper *keeper){
 int menu(){
 
 	int selection = 0;
-	printf(" Select a function:\n");
-	printf(" --------------------\n");
-	printf(" 1. Add node to back\n");
-	printf(" 2. Add node to front\n");
-	printf(" --------------------\n");
-	printf(" 3. Remove node from back\n");
-	printf(" 4. Remove node from front\n");
-	printf(" -------------------------\n");
-	printf(" 5. Examine last element\n");
-	printf(" 6. Examine first element\n");
-	printf(" 7. Examine all elements\n");
-	printf(" -------------------------\n");
-	printf(" 0. Exit\n");
+	printf("  Select a function:\n");
+	printf("  -------------------------\n");
+	printf("  1. Push node to back\n");
+	printf("  2. Push node to front\n");
+	printf("  -------------------------\n");
+	printf("  3. Pop node from back\n");
+	printf("  4. Pop node from front\n");
+	printf("  -------------------------\n");
+	printf("  5. Peek last element\n");
+	printf("  6. Peek first element\n");
+	printf("  7. Peek all elements\n");
+	printf("  -------------------------\n");
+	printf("  0. Exit\n");
 	printf("> ");
 
 	scanf("%d", &selection);
@@ -168,25 +185,25 @@ int start(){
 		selection = menu();
 		switch(selection){
 			case 1:
-					add_node_back(keeper);
+					push_back(keeper);
 					break;
 			case 2:
-					add_node_front(keeper);
+					push_front(keeper);
 					break;
 			case 3:
-					remove_node_back(keeper);
+					pop_back(keeper);
 					break;
 			case 4:
-					remove_node_front(keeper);
+					pop_front(keeper);
 					break;
 			case 5:
-					view_back(keeper);
+					peek_back(keeper);
 					break;
 			case 6:
-					view_front(keeper);
+					peek_front(keeper);
 					break;
 			case 7:
-					view_list(keeper);
+					peek_list(keeper);
 					break;
 			case 0:
 					break;
@@ -202,7 +219,8 @@ void desc(){
 	printf("----------------------------------------------------------------\n");
 	printf("A deque (or dequeue, short for double-ended-queue) is an ADT\n");
 	printf("(abstract data type) which can have elements added and removed\n");
-	printf("from both the front and the back.\n");
+	printf("from both the front and the back. General functions are Peek,\n");
+	printf("Pop and Push.\n");
 	printf("----------------------------------------------------------------\n");
 	printf("\n");
 }
