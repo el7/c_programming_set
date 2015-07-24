@@ -55,7 +55,6 @@ not_done:
 	gcc -std=c99 palindrome.c -o palindrome.prog			
 	gcc -std=c99 matrix_mult.c -o matrix_mult.prog			
 
-
 ## will do these after others are done
 questionable:	
 	
