@@ -14,7 +14,6 @@ complete: linked_structures puzzle mathy searching sorting basic
 test:
 	gcc -std=c99 quick_sort.c -o qsort.prog
 	gcc -std=c99 file_IO.c -o file_io.prog
-	gcc -std=c99 queue_using_ll.c -o queue_using_ll.prog
 
 puzzle:
 	gcc -std=c99 tower_of_hanoi.c -o hanoi.prog
@@ -40,8 +39,11 @@ linked_structures:
 	gcc -std=c99 deque.c -o deque.prog
 	gcc -std=c99 singly_linked_list.c -o singly_ll.prog		
 	gcc -std=c99 doubly_linked_list.c -o doubly_ll.prog		
+	gcc -std=c99 queue_using_ll.c -o queue_using_ll.prog
 
 searching:
+	gcc -std=c99 linear_search.c -o linear_search.prog
+	gcc -std=c99 linear_search_recurs.c -o linear_search_recurs.prog
 
 sorting:
 	gcc -std=c99 bubble_sort.c -o bub_sort.prog
@@ -93,8 +95,6 @@ questionable:
 	#search
 	full_in-threaded_BST_ins_del_trav.c
 	BST_ins_del.c
-	linear_search.c
-	linear_search_recurs.c
 	binary_search_recurs.c
 	#sort
 	heap_sort.c

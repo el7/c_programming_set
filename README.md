@@ -3,7 +3,7 @@ c_programming_set
 
 ## Abuncha C
 
-(for now) The makefile will give a better description to the progress.
+The makefile will give a more up-to-date description to the progress.
 
 Completed (more or less):
 - Fibonacci numbers
