@@ -14,7 +14,7 @@ struct node{
 	struct node *next;
 };
 
-
+/* Views node form back of keeper (tail) */
 int peek_back(struct keeper *keeper){
 
 	struct node *cur;
@@ -31,6 +31,7 @@ int peek_back(struct keeper *keeper){
 	return 0;
 }
 
+/* Views node from front of keeper (head) */
 int peek_front(struct keeper *keeper){
 
 	struct node *cur;
@@ -48,6 +49,7 @@ int peek_front(struct keeper *keeper){
 return 0;
 }
 
+/* Views all nodes on keeper */
 int peek_list(struct keeper *keeper){
 
 	struct node *cur;
@@ -69,31 +71,57 @@ int peek_list(struct keeper *keeper){
 	return 0;
 }
 
+/* removes node from the back (tail) */
 int pop_back(struct keeper *keeper){
 
+	struct node *cur;
+	cur = keeper->tail;
 
-	if(keeper->tail != NULL){
-		keeper->tail = keeper->tail->prev;
-		printf("\nHERE\n");
-		free(keeper->tail->next);
-		keeper->tail->next = NULL;
+	if(cur != NULL){
+		if(cur->prev != NULL){
+			printf("HERE_B\n");
+			cur = cur->prev;
+			free(cur->next);
+			keeper->tail = cur;			
+			cur->next = NULL;
+		} else {
+			printf("here_b\n");
+			free(cur);
+			keeper->head = NULL;
+			keeper->tail = NULL;
+		}
 	} else printf("Deque is empty.\n");
 
 	return 0;
 }
 
+/* removes node from the front (head) */
 int pop_front(struct keeper *keeper){
 
-	if(keeper->head != NULL){
-		keeper->head = keeper->head->next;
-		free(keeper->head->prev);
-		keeper->head->prev = NULL;
+	struct node *cur;
+	cur = keeper->head;
+
+	if(cur != NULL){
+		// if more than only 1 node
+		if(cur->next != NULL){			
+			printf("HERE_F\n");			
+			cur = cur->next;	
+			free(cur->prev);
+			keeper->head = cur;			
+			cur->prev = NULL;			
+		// if only 1 node			
+		} else {					
+			printf("here_f\n");
+			free(cur);
+			keeper->head = NULL;
+			keeper->tail = NULL;
+		}
 	} else printf("Deque is empty.\n");
 
 	return 0;
 }
 
-
+/* adds node to keeper in the back (tail) */
 int push_back(struct keeper *keeper){
 
 	int id = keeper->top_id+1;
@@ -113,7 +141,7 @@ int push_back(struct keeper *keeper){
 		keeper->tail = keeper->tail->next;	
 	}
 
-	printf("What value is the payload?\n> ");
+	printf("What value is the payload? (int)\n> ");
 	scanf("%d", &payload);
 	new_node->payload = payload;
 	new_node->id = id;
@@ -121,6 +149,7 @@ int push_back(struct keeper *keeper){
 	return 0;
 }
 
+/* adds node to keeper in the front (head) */
 int push_front(struct keeper *keeper){
 
 	int payload = 0;
@@ -140,7 +169,7 @@ int push_front(struct keeper *keeper){
 		keeper->head = keeper->head->prev;	
 	}
 
-	printf("What value is the payload?\n> ");
+	printf("What value is the payload? (int)\n> ");
 	scanf("%d", &payload);
 	new_node->payload = payload;
 	new_node->id = id;
@@ -148,20 +177,20 @@ int push_front(struct keeper *keeper){
 	return 0;
 }
 
-
+/* Prints menu, collects user input */
 int menu(){
 
 	int selection = 0;
 	printf("  Select a function:\n");
 	printf("  -------------------------\n");
-	printf("  1. Push node to back\n");
-	printf("  2. Push node to front\n");
+	printf("  1. Push node to front\n");
+	printf("  2. Push node to back\n");
 	printf("  -------------------------\n");
-	printf("  3. Pop node from back\n");
-	printf("  4. Pop node from front\n");
+	printf("  3. Pop node from front\n");
+	printf("  4. Pop node from back\n");
 	printf("  -------------------------\n");
-	printf("  5. Peek last element\n");
-	printf("  6. Peek first element\n");
+	printf("  5. Peek first element\n");
+	printf("  6. Peek last element\n");
 	printf("  7. Peek all elements\n");
 	printf("  -------------------------\n");
 	printf("  0. Exit\n");
@@ -172,6 +201,7 @@ int menu(){
 }
 
 
+/* Computes the menu for the program */
 int start(){
 
 	struct keeper *keeper;
@@ -185,22 +215,22 @@ int start(){
 		selection = menu();
 		switch(selection){
 			case 1:
-					push_back(keeper);
-					break;
-			case 2:
 					push_front(keeper);
 					break;
-			case 3:
-					pop_back(keeper);
+			case 2:
+					push_back(keeper);
 					break;
-			case 4:
+			case 3:
 					pop_front(keeper);
 					break;
+			case 4:
+					pop_back(keeper);
+					break;
 			case 5:
-					peek_back(keeper);
+					peek_front(keeper);
 					break;
 			case 6:
-					peek_front(keeper);
+					peek_back(keeper);
 					break;
 			case 7:
 					peek_list(keeper);
@@ -215,6 +245,7 @@ int start(){
 	return 0;
 }
 
+/* Describes the program */
 void desc(){
 	printf("----------------------------------------------------------------\n");
 	printf("A deque (or dequeue, short for double-ended-queue) is an ADT\n");
@@ -225,6 +256,7 @@ void desc(){
 	printf("\n");
 }
 
+/* Describes and starts the program */
 int main(){
 	printf("\n\n");
 	desc();
