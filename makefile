@@ -7,6 +7,14 @@ all: splash complete test
 splash:
 	@toilet --gay "c programs"
 
+## program works (potentially well) but could be improved
+complete: linked_structures puzzle mathy searching sorting basic
+
+## program is being tested
+test:
+	gcc -std=c99 quick_sort.c -o qsort.prog
+	gcc -std=c99 file_IO.c -o file_io.prog
+
 puzzle:
 	gcc -std=c99 tower_of_hanoi.c -o hanoi.prog
 
@@ -27,6 +35,7 @@ mathy:
 	gcc -std=c99 primes.c -o primes.prog
 
 linked_structures:
+	gcc -std=c99 deque.c -o deque.prog
 	gcc -std=c99 singly_linked_list.c -o singly_ll.prog		
 	gcc -std=c99 doubly_linked_list.c -o doubly_ll.prog		
 
@@ -35,17 +44,6 @@ searching:
 sorting:
 	gcc -std=c99 bubble_sort.c -o bub_sort.prog
 	gcc -std=c99 selection_sort.c -o selection_sort.prog		
-
-## program works (potentially well) but could be improved
-complete: linked_structures puzzle mathy searching sorting basic
-
-
-## program is being tested
-test:
-	gcc -std=c99 quick_sort.c -o qsort.prog
-	gcc -std=c99 deque.c -o deque.prog
-	gcc -std=c99 file_IO.c -o file_io.prog
-
 
 ## in progress, near or far from done
 not_done:
@@ -106,6 +104,7 @@ questionable:
 	radix_sort.c
 	shell_sort.c
 
+c: clean
 
 clean:
 	@rm -f *.prog
