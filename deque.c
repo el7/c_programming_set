@@ -18,7 +18,7 @@ struct node{
 int peek_back(struct keeper *keeper){
 
 	struct node *cur;
-	cur = keeper->head;
+	cur = keeper->tail;
 
 	if (cur != NULL){
 		printf("--------\n");
@@ -79,13 +79,11 @@ int pop_back(struct keeper *keeper){
 
 	if(cur != NULL){
 		if(cur->prev != NULL){
-			printf("HERE_B\n");
 			cur = cur->prev;
 			free(cur->next);
 			keeper->tail = cur;			
 			cur->next = NULL;
 		} else {
-			printf("here_b\n");
 			free(cur);
 			keeper->head = NULL;
 			keeper->tail = NULL;
@@ -104,14 +102,12 @@ int pop_front(struct keeper *keeper){
 	if(cur != NULL){
 		// if more than only 1 node
 		if(cur->next != NULL){			
-			printf("HERE_F\n");			
 			cur = cur->next;	
 			free(cur->prev);
 			keeper->head = cur;			
 			cur->prev = NULL;			
 		// if only 1 node			
 		} else {					
-			printf("here_f\n");
 			free(cur);
 			keeper->head = NULL;
 			keeper->tail = NULL;

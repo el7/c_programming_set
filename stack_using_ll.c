@@ -62,13 +62,11 @@ int pop_back(struct keeper *keeper){
 
 	if(cur != NULL){
 		if(cur->prev != NULL){
-			printf("HERE_B\n");
 			cur = cur->prev;
 			free(cur->next);
 			keeper->tail = cur;			
 			cur->next = NULL;
 		} else {
-			printf("here_b\n");
 			free(cur);
 			keeper->head = NULL;
 			keeper->tail = NULL;

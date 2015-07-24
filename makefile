@@ -14,6 +14,7 @@ complete: linked_structures puzzle mathy searching sorting basic
 test:
 	gcc -std=c99 quick_sort.c -o qsort.prog
 	gcc -std=c99 file_IO.c -o file_io.prog
+	gcc -std=c99 queue_using_ll.c -o queue_using_ll.prog
 
 puzzle:
 	gcc -std=c99 tower_of_hanoi.c -o hanoi.prog
@@ -35,6 +36,7 @@ mathy:
 	gcc -std=c99 primes.c -o primes.prog
 
 linked_structures:
+	gcc -std=c99 stack_using_ll.c -o stack_using_ll.prog
 	gcc -std=c99 deque.c -o deque.prog
 	gcc -std=c99 singly_linked_list.c -o singly_ll.prog		
 	gcc -std=c99 doubly_linked_list.c -o doubly_ll.prog		
@@ -84,9 +86,7 @@ questionable:
 	copy_the_string.c
 	#structures
 	circular_deque.c
-	queue_using array.c
-	stack_using_ll.c
-	queue_using_ll.c
+	queue_using_array.c
 	sorted_linked_list.c
 	reverse_linked_list.c
 	circularly_linked_list.c
