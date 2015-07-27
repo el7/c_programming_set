@@ -1,24 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**************
+ * structures *
+ **************/
+
 struct keeper{
-	struct node *head;
+	struct node *master_root;
+	struct node *left_tail;		// farthest left  node
+	struct node *right_tail;	// farthest right node
 	int top_id; 
-	struct node *tail;
+	
 };
 
 struct node{
-	int id;
-	int payload;
-	struct node *left;
-	struct node *right;
+	int id;					// node's ID
+	int payload;			// node's value
+	struct node *root;		// 		 root node
+	struct node *left;		// left  leaf node
+	struct node *right;		// right leaf node
 };
 
-/* Views node form back of keeper (tail) */
-int peek_back(struct keeper *keeper){
+
+/***********************
+ * function prototypes *
+ ***********************/
+
+int peek_right(struct keeper *keeper);
+int peek_left(struct keeper *keeper);
+int peek_node(struct node *cur);
+int peek_top(struct keeper *keeper);
+int peek_tree(struct keeper *keeper);
+int pop_left(struct keeper *keeper);
+int pop_right(struct keeper *keeper);
+int push_node(struct keeper *keeper);
+int menu();
+int start();
+void desc();
+
+
+/* Views largest valued node (right_tail) */
+int peek_right(struct keeper *keeper){
 
 	struct node *cur;
-	cur = keeper->tail;
+	cur = keeper->right_tail;
 
 	if (cur != NULL){
 		printf("--------\n");
@@ -31,11 +56,50 @@ int peek_back(struct keeper *keeper){
 	return 0;
 }
 
-/* Views node from front of keeper (head) */
-int peek_front(struct keeper *keeper){
+
+/* Views smallest valued node (left_tail) */
+int peek_left(struct keeper *keeper){
 
 	struct node *cur;
-	cur = keeper->head;
+	cur = keeper->left_tail;
+
+	if (cur != NULL){
+		printf("--------\n");
+		printf("id:  %d\n", cur->id);
+		printf("val: %d\n", cur->payload);
+		printf("--------\n");
+	} else printf("\nList is empty!\n");
+	printf("\n");
+
+	return 0;
+}
+
+int peek_node(struct node *cur){
+	
+	// peek current node
+	if (cur == NULL){
+		printf("List is empty!\n");
+		return 0;
+	} else {
+		printf("--------\n");
+		printf("id:  %d\n", cur->id);
+		printf("val: %d\n", cur->payload);
+		printf("--------\n");
+	}
+
+	// peek leaf nodes
+	if (cur->left != NULL) peek_node(cur->left);
+	if (cur->right != NULL) peek_node(cur->right);
+
+	return 0;
+}
+
+
+/* Views very top root node (master_root) */
+int peek_top(struct keeper *keeper){
+
+	struct node *cur;
+	cur = keeper->master_root;
 
 	if (cur != NULL){
 		printf("--------\n");
@@ -49,33 +113,32 @@ int peek_front(struct keeper *keeper){
 return 0;
 }
 
-/* Views all nodes on keeper */
-int peek_list(struct keeper *keeper){
+/* Views all nodes in tree */
+int peek_tree(struct keeper *keeper){
 
+	// get master_root node
 	struct node *cur;
-	cur = keeper->head;
+	cur = keeper->master_root;
 
+	// if not NULL, send to peek function
 	printf("\n");
 	if (cur == NULL)
 		printf("List is empty!\n");
-
-	while(cur != NULL){
-		printf("--------\n");
-		printf("id:  %d\n", cur->id);
-		printf("val: %d\n", cur->payload);
-		printf("--------\n");
-		cur = cur->right;
-	}
+	else
+		peek_node(cur);
+	
 	printf("\n");
 
 	return 0;
 }
 
 /* removes node from the back (tail) */
-int pop_back(struct keeper *keeper){
+int pop_left(struct keeper *keeper){
 
 	struct node *cur;
-	cur = keeper->tail;
+	cur = keeper->left_tail;
+
+/* NEEDS FIXING
 
 	if(cur != NULL){
 		if(cur->left != NULL){
@@ -85,90 +148,67 @@ int pop_back(struct keeper *keeper){
 			cur->right = NULL;
 		} else {
 			free(cur);
-			keeper->head = NULL;
+			keeper->master_root = NULL;
 			keeper->tail = NULL;
 		}
 	} else printf("Deque is empty.\n");
+*/
 
 	return 0;
 }
 
-/* removes node from the front (head) */
-int pop_front(struct keeper *keeper){
+/* removes node from the front (master_root) */
+int pop_right(struct keeper *keeper){
 
 	struct node *cur;
-	cur = keeper->head;
+	cur = keeper->right_tail;
+
+/* NEEDS FIXING
 
 	if(cur != NULL){
 		// if more than only 1 node
 		if(cur->right != NULL){			
 			cur = cur->right;	
 			free(cur->left);
-			keeper->head = cur;			
+			keeper->master_root = cur;			
 			cur->left = NULL;			
 		// if only 1 node			
 		} else {					
 			free(cur);
-			keeper->head = NULL;
+			keeper->master_root = NULL;
 			keeper->tail = NULL;
 		}
 	} else printf("Deque is empty.\n");
+*/
 
 	return 0;
 }
 
-/* adds node to keeper in the back (tail) */
-int push_back(struct keeper *keeper){
+int push_node(struct keeper *keeper){
 
-	int id = keeper->top_id+1;
-	keeper->top_id = id;
-	int payload = 0;
 	struct node *new_node;
-	new_node = (struct node*) malloc(sizeof(struct node));
-	new_node->right = NULL;
-
-	if (keeper->tail == NULL){
-		new_node->left = NULL;
-		keeper->tail = new_node;	
-		keeper->head = new_node;	
-	} else if (keeper->tail->right == NULL){
-		new_node->left = keeper->tail;
-		keeper->tail->right = new_node;	
-		keeper->tail = keeper->tail->right;	
-	}
-
-	printf("What value is the payload? (int)\n> ");
-	scanf("%d", &payload);
-	new_node->payload = payload;
-	new_node->id = id;
-	
-	return 0;
-}
-
-/* adds node to keeper in the front (head) */
-int push_front(struct keeper *keeper){
-
-	int payload = 0;
-	struct node *new_node;
-	int id = keeper->top_id+1;
-	keeper->top_id = id;
 	new_node = (struct node*) malloc(sizeof(struct node));
 	new_node->left = NULL;
+	new_node->right = NULL;
 
-	if (keeper->head == NULL){
-		new_node->right = NULL;
-		keeper->head = new_node;	
-		keeper->tail = new_node;	
-	} else if (keeper->head->left == NULL){
-		new_node->right = keeper->head;
-		keeper->head->left = new_node;	
-		keeper->head = keeper->head->left;	
-	}
+	int id = keeper->top_id+1;
+	keeper->top_id = id;
+	new_node->id = id;
 
-	printf("What value is the payload? (int)\n> ");
+	int payload = 0;
+	printf("what value is the payload? (int)\n> ");
 	scanf("%d", &payload);
 	new_node->payload = payload;
-	new_node->id = id;
+
+	// figure where to put new node
+	
+	if (keeper->master_root == NULL){
+		keeper->master_root = new_node;	
+		keeper->left_tail = new_node;
+		keeper->right_tail = new_node;
+	} else {
+		// find spot to put new node
+	}
 
 	return 0;
 }
@@ -204,9 +244,10 @@ int start(){
 
 	struct keeper *keeper;
 	keeper = (struct keeper*) malloc(sizeof(struct keeper));
-	keeper->head = NULL;
+	keeper->master_root = NULL;
+	keeper->left_tail = NULL;
+	keeper->right_tail = NULL;
 	keeper->top_id = 0;
-	keeper->tail = NULL;
 
 	int selection = 0;
 	do{
@@ -219,19 +260,19 @@ int start(){
 //					push_back(keeper);
 					break;
 			case 3:
-//					pop_front(keeper);
+//					pop_right(keeper);
 					break;
 			case 4:
-//					pop_back(keeper);
+//					pop_left(keeper);
 					break;
 			case 5:
-//					peek_front(keeper);
+//					peek_top(keeper);
 					break;
 			case 6:
 //					peek_back(keeper);
 					break;
 			case 7:
-//					peek_list(keeper);
+//					peek_tree(keeper);
 					break;
 			case 0:
 					break;
@@ -251,7 +292,8 @@ void desc(){
 	printf("The left leaf is always less than the node.\n");
 	printf("The right leaf is always more than the node.\n");
 	printf("\n");
-	printf("This version (when complete) only lets you add nodes\n");
+	printf("This version (when complete) only lets you add nodes,\n");
+	printf("and is unbalanced,\n");
 	printf("----------------------------------------------------------------\n");
 	printf("\n");
 }
