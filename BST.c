@@ -43,7 +43,10 @@ void desc();
 int peek_right(struct keeper *keeper){
 
 	struct node *cur;
-	cur = keeper->right_tail;
+	cur = keeper->master_root;
+
+	while(cur->right != NULL)
+		cur = cur->right;
 
 	if (cur != NULL){
 		printf("--------\n");
@@ -51,6 +54,10 @@ int peek_right(struct keeper *keeper){
 		printf("val: %d\n", cur->payload);
 		printf("--------\n");
 	} else printf("\nList is empty!\n");
+	
+	if (cur->right == NULL)
+		printf("cur->right: NULL\n");
+
 	printf("\n");
 
 	return 0;
@@ -61,7 +68,10 @@ int peek_right(struct keeper *keeper){
 int peek_left(struct keeper *keeper){
 
 	struct node *cur;
-	cur = keeper->left_tail;
+	cur = keeper->master_root;
+
+	while(cur->left != NULL)
+		cur = cur->left;
 
 	if (cur != NULL){
 		printf("--------\n");
@@ -186,28 +196,60 @@ int pop_right(struct keeper *keeper){
 
 int push_node(struct keeper *keeper){
 
+	int user = 0;
+
+	// create new node
 	struct node *new_node;
 	new_node = (struct node*) malloc(sizeof(struct node));
 	new_node->left = NULL;
 	new_node->right = NULL;
 
+	// give values to node
 	int id = keeper->top_id+1;
 	keeper->top_id = id;
 	new_node->id = id;
-
 	int payload = 0;
 	printf("what value is the payload? (int)\n> ");
 	scanf("%d", &payload);
 	new_node->payload = payload;
 
+	// create temp node
+	struct node *cur = keeper->master_root;
+
 	// figure where to put new node
-	if (keeper->master_root == NULL){
+	if (cur == NULL){
+		printf("This node is root node!\n");
 		keeper->master_root = new_node;	
-		keeper->left_tail = new_node;
-		keeper->right_tail = new_node;
+//		keeper->left_tail = new_node;
+//		keeper->right_tail = new_node;
 	} else {
 		// find spot to put new node
-			
+		while(cur != NULL){
+			if (payload == cur->payload){
+				printf("Looks like this node already exists. You can...\n");
+				printf(" (1) add a duplicate to its left\n");
+				printf(" (2) cancel the add\n> ");
+				scanf("%d", &user);
+				if (user != 1)
+					return 0;
+			}
+			if (payload <= cur->payload){
+				if (cur->left == NULL)
+					cur->left == new_node;
+	
+				cur = cur->left;
+			}
+			else if (payload > cur->payload){
+				if (cur->right == NULL)
+					cur->right == new_node;
+	
+				cur = cur->right;
+			}
+		}
+//		cur = new_node;
+
+//		keeper->left_tail = new_node;
+//		keeper->right_tail = new_node;
 	}
 
 	return 0;
@@ -295,7 +337,7 @@ void desc(){
 	printf("The right leaf is always more than the node.\n");
 	printf("\n");
 	printf("This version (when complete) only lets you add nodes,\n");
-	printf("and is unbalanced,\n");
+	printf("and is balanced but doesn't re-balance.\n");
 	printf("----------------------------------------------------------------\n");
 	printf("\n");
 }
