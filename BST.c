@@ -29,7 +29,7 @@ struct node{
 int peek_right(struct keeper *keeper);
 int peek_left(struct keeper *keeper);
 int peek_node(struct node *cur);
-int peek_top(struct keeper *keeper);
+int peek_root(struct keeper *keeper);
 int peek_tree(struct keeper *keeper);
 int pop_left(struct keeper *keeper);
 int pop_right(struct keeper *keeper);
@@ -96,7 +96,7 @@ int peek_node(struct node *cur){
 
 
 /* Views very top root node (master_root) */
-int peek_top(struct keeper *keeper){
+int peek_root(struct keeper *keeper){
 
 	struct node *cur;
 	cur = keeper->master_root;
@@ -201,13 +201,13 @@ int push_node(struct keeper *keeper){
 	new_node->payload = payload;
 
 	// figure where to put new node
-	
 	if (keeper->master_root == NULL){
 		keeper->master_root = new_node;	
 		keeper->left_tail = new_node;
 		keeper->right_tail = new_node;
 	} else {
 		// find spot to put new node
+			
 	}
 
 	return 0;
@@ -221,15 +221,17 @@ int menu(){
 	printf("  -------------------------\n");
 	printf("  Select a function:\n");
 	printf("  -------------------------\n");
-//	printf("  1. Push node to front\n");
-//	printf("  2. Push node to back\n");
+	printf("  1. Push node onto tree\n");
 	printf("  -------------------------\n");
-//	printf("  3. Pop node from front\n");
-//	printf("  4. Pop node from back\n");
+	printf("  2. Pop smallest node\n");
+	printf("  3. Pop largest node\n");
+//  printf("  ?. Pop arbitraty node\n");
 	printf("  -------------------------\n");
-//	printf("  5. Peek first element\n");
-//	printf("  6. Peek last element\n");
-//	printf("  7. Peek all elements\n");
+	printf("  4. Peek root node\n");
+	printf("  5. Peek smallest node\n");
+	printf("  6. Peek largest node\n");
+	printf("  7. Peek all nodes\n");
+//  printf("  ?. Peek arbitraty node\n");
 	printf("  -------------------------\n");
 	printf("  0. Exit\n");
 	printf("> ");
@@ -254,25 +256,25 @@ int start(){
 		selection = menu();
 		switch(selection){
 			case 1:
-//					push_front(keeper);
+					push_node(keeper);
 					break;
 			case 2:
-//					push_back(keeper);
+					pop_left(keeper);
 					break;
 			case 3:
-//					pop_right(keeper);
+					pop_right(keeper);
 					break;
 			case 4:
-//					pop_left(keeper);
+					peek_root(keeper);
 					break;
 			case 5:
-//					peek_top(keeper);
+					peek_left(keeper);
 					break;
 			case 6:
-//					peek_back(keeper);
+					peek_right(keeper);
 					break;
 			case 7:
-//					peek_tree(keeper);
+					peek_tree(keeper);
 					break;
 			case 0:
 					break;
