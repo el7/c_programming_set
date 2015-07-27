@@ -5,7 +5,7 @@ default: all
 all: splash complete test
 
 splash:
-	@toilet --gay "c programs"
+	@toilet --gay "c_programs"
 
 ## program works (potentially well) but could be improved
 complete: linked_structures puzzle mathy searching sorting basic
@@ -14,6 +14,7 @@ complete: linked_structures puzzle mathy searching sorting basic
 test:
 	gcc -std=c99 quick_sort.c -o qsort.prog
 	gcc -std=c99 file_IO.c -o file_io.prog
+	gcc -std=c99 BST.c -o bst.prog
 
 puzzle:
 	gcc -std=c99 tower_of_hanoi.c -o hanoi.prog
@@ -91,7 +92,6 @@ questionable:
 	sorted_linked_list.c
 	reverse_linked_list.c
 	circularly_linked_list.c
-	#search
 	full_in-threaded_BST_ins_del_trav.c
 	BST_ins_del.c
 	binary_search_recurs.c
