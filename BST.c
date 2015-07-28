@@ -31,8 +31,8 @@ int peek_left(struct keeper *keeper);
 int peek_node(struct node *cur);
 int peek_root(struct keeper *keeper);
 int peek_tree(struct keeper *keeper);
-int pop_left(struct keeper *keeper);
-int pop_right(struct keeper *keeper);
+void pop_left(struct node *root);
+void pop_right(struct node *root);
 int push_node(struct keeper *keeper);
 int menu();
 int start();
@@ -140,56 +140,30 @@ int peek_tree(struct keeper *keeper){
 	return 0;
 }
 
-/* removes node from the back (tail) */
-int pop_left(struct keeper *keeper){
 
-	struct node *cur;
-	cur = keeper->left_tail;
+/* removes smallest valued node */
+void pop_left(struct node *root){
 
-/* NEEDS FIXING
+	if (root == NULL){
+		printf("The tree is empty!\n");
+		return;
+	}
+	if (root->left != NULL)
+		pop_left(root->left);
 
-	if(cur != NULL){
-		if(cur->left != NULL){
-			cur = cur->left;
-			free(cur->right);
-			keeper->tail = cur;			
-			cur->right = NULL;
-		} else {
-			free(cur);
-			keeper->master_root = NULL;
-			keeper->tail = NULL;
-		}
-	} else printf("Deque is empty.\n");
-*/
+	if (root->right != NULL){
+		root = root->right;
+		free(root->right);
+	} else free(root);
 
-	return 0;
+	return;
 }
 
-/* removes node from the front (master_root) */
-int pop_right(struct keeper *keeper){
+/* removes largest valued node */
+void pop_right(struct node *root){
 
-	struct node *cur;
-	cur = keeper->right_tail;
 
-/* NEEDS FIXING
-
-	if(cur != NULL){
-		// if more than only 1 node
-		if(cur->right != NULL){			
-			cur = cur->right;	
-			free(cur->left);
-			keeper->master_root = cur;			
-			cur->left = NULL;			
-		// if only 1 node			
-		} else {					
-			free(cur);
-			keeper->master_root = NULL;
-			keeper->tail = NULL;
-		}
-	} else printf("Deque is empty.\n");
-*/
-
-	return 0;
+	return;
 }
 
 void insert(struct node *root, struct node *new_node){
@@ -214,7 +188,6 @@ void insert(struct node *root, struct node *new_node){
 			root->left = new_node;
 		else insert(root->left, new_node);
 	}
-
 }
 
 int push_node(struct keeper *keeper){
@@ -293,10 +266,10 @@ int start(){
 					push_node(keeper);
 					break;
 			case 2:
-					pop_left(keeper);
+					pop_left(keeper->master_root);
 					break;
 			case 3:
-					pop_right(keeper);
+					pop_right(keeper->master_root);
 					break;
 			case 4:
 					peek_root(keeper);
