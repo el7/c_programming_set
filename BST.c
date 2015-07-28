@@ -45,9 +45,20 @@ void desc();
 
 void search_val_helper(struct node *root, int val){
 
+	
+	while (root != NULL){
 
+		if (root->payload == val){
+			printf("val(%d) found on node with ID(%d)\n", val, root->id);
+			return;
+		}
+		
+		if (root->payload > val)
+			root = root->left;
+		else if (root->payload < val)
+			root = root->right;
 
-
+	}
 
 	return;
 }
