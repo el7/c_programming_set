@@ -26,11 +26,11 @@ struct node{
  * function prototypes *
  ***********************/
 
-int peek_right(struct keeper *keeper);
-int peek_left(struct keeper *keeper);
-int peek_node(struct node *cur);
-int peek_root(struct keeper *keeper);
-int peek_tree(struct keeper *keeper);
+void peek_right(struct keeper *keeper);
+void peek_left(struct keeper *keeper);
+void peek_node(struct node *cur);
+void peek_root(struct keeper *keeper);
+void peek_tree(struct keeper *keeper);
 void pop_left(struct node *root);
 void pop_right(struct node *root);
 int push_node(struct keeper *keeper);
@@ -40,7 +40,7 @@ void desc();
 
 
 /* Views largest valued node (right_tail) */
-int peek_right(struct keeper *keeper){
+void peek_right(struct keeper *keeper){
 
 	struct node *cur;
 	cur = keeper->master_root;
@@ -48,6 +48,7 @@ int peek_right(struct keeper *keeper){
 	while(cur->right != NULL)
 		cur = cur->right;
 
+	printf("\n");
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -57,12 +58,12 @@ int peek_right(struct keeper *keeper){
 	
 	printf("\n");
 
-	return 0;
+	return;
 }
 
 
 /* Views smallest valued node (left_tail) */
-int peek_left(struct keeper *keeper){
+void peek_left(struct keeper *keeper){
 
 	struct node *cur;
 	cur = keeper->master_root;
@@ -70,6 +71,7 @@ int peek_left(struct keeper *keeper){
 	while(cur->left != NULL)
 		cur = cur->left;
 
+	printf("\n");
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -78,15 +80,16 @@ int peek_left(struct keeper *keeper){
 	} else printf("\nList is empty!\n");
 	printf("\n");
 
-	return 0;
+	return;
 }
 
 /* Views very top root node (master_root) */
-int peek_root(struct keeper *keeper){
+void peek_root(struct keeper *keeper){
 
 	struct node *cur;
 	cur = keeper->master_root;
 
+	printf("\n");
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -96,15 +99,15 @@ int peek_root(struct keeper *keeper){
 
 	printf("\n");
 
-return 0;
+	return;
 }
 
-int peek_node(struct node *root){
+void peek_node(struct node *root){
 	
 	// peek current node
 	if (root == NULL){
 		printf("List is empty!\n");
-		return 0;
+		return;
 	} else {
 		printf("--------\n");
 		printf("id:  %d\n", root->id);
@@ -119,11 +122,11 @@ int peek_node(struct node *root){
 	if (root->right != NULL)
 		peek_node(root->right);
 
-	return 0;
+	return;
 }
 
 /* Views all nodes in tree */
-int peek_tree(struct keeper *keeper){
+void peek_tree(struct keeper *keeper){
 
 	printf("\n");
 
@@ -137,7 +140,7 @@ int peek_tree(struct keeper *keeper){
 
 	printf("\n");
 
-	return 0;
+	return;
 }
 
 
