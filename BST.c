@@ -162,6 +162,17 @@ void pop_left(struct node *root){
 /* removes largest valued node */
 void pop_right(struct node *root){
 
+	if (root == NULL){
+		printf("The tree is empty!\n");
+		return;
+	}
+	if (root->right != NULL)
+		pop_right(root->right);
+
+	if (root->left != NULL){
+		root = root->left;
+		free(root->left);
+	} else free(root);
 
 	return;
 }
