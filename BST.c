@@ -150,14 +150,17 @@ void pop_left(struct node *root){
 	if (root == NULL){
 		printf("The tree is empty!\n");
 		return;
-	}
-	if (root->left != NULL)
+	} else if (root->left != NULL)
 		pop_left(root->left);
 
 	if (root->right != NULL){
 		root = root->right;
 		free(root->right);
-	} else free(root);
+		root->right = NULL;
+	} else {
+		free(root);
+		// make parent->left NULL
+	}
 
 	return;
 }
@@ -168,14 +171,17 @@ void pop_right(struct node *root){
 	if (root == NULL){
 		printf("The tree is empty!\n");
 		return;
-	}
-	if (root->right != NULL)
+	} else if (root->right != NULL)
 		pop_right(root->right);
 
 	if (root->left != NULL){
 		root = root->left;
 		free(root->left);
-	} else free(root);
+		root->left = NULL;
+	} else {
+		free(root);
+		// make parent->right NULL
+	}
 
 	return;
 }
