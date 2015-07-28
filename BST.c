@@ -26,6 +26,10 @@ struct node{
  * function prototypes *
  ***********************/
 
+void search_val_helper(struct node *root, int val);
+void search_val_recurs_helper(struct node *root, int val);
+void search_val(struct node *root);
+void search_val_recurs(struct node *root);
 void peek_right(struct keeper *keeper);
 void peek_left(struct keeper *keeper);
 void peek_node(struct node *cur);
@@ -39,6 +43,55 @@ int start();
 void desc();
 
 
+void search_val_helper(struct node *root, int val){
+
+
+
+
+
+	return;
+}
+
+void search_val_recurs_helper(struct node *root, int val){
+
+	if (root == NULL)
+		return;
+	if (root->payload == val){
+		printf("val(%d) found on node with ID(%d)\n", val, root->id);
+		return;
+	} else {
+		search_val_recurs_helper(root->left, val);
+		search_val_recurs_helper(root->right, val);
+	}
+		
+	return;
+}
+
+void search_val(struct node *root){
+	
+	int val = 0;
+	printf("What payload value would you like to find?\n> ");
+	scanf("%d", &val);
+	printf("\n");
+	search_val_helper(root, val);
+	printf("\n");
+
+	return;
+}
+
+
+void search_val_recurs(struct node *root){
+
+	int val = 0;
+	printf("What payload value would you like to find?\n> ");
+	scanf("%d", &val);
+	printf("\n");
+	search_val_recurs_helper(root, val);
+	printf("\n");
+
+	return;
+}
+
 /* Views largest valued node (right_tail) */
 void peek_right(struct keeper *keeper){
 
@@ -48,7 +101,6 @@ void peek_right(struct keeper *keeper){
 	while(cur->right != NULL)
 		cur = cur->right;
 
-	printf("\n");
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -71,7 +123,6 @@ void peek_left(struct keeper *keeper){
 	while(cur->left != NULL)
 		cur = cur->left;
 
-	printf("\n");
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -89,7 +140,6 @@ void peek_root(struct keeper *keeper){
 	struct node *cur;
 	cur = keeper->master_root;
 
-	printf("\n");
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -105,10 +155,7 @@ void peek_root(struct keeper *keeper){
 void peek_node(struct node *root){
 	
 	// peek current node
-	if (root == NULL){
-		printf("List is empty!\n");
-		return;
-	} else {
+	if (root != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", root->id);
 		printf("val: %d\n", root->payload);
@@ -127,8 +174,6 @@ void peek_node(struct node *root){
 
 /* Views all nodes in tree */
 void peek_tree(struct keeper *keeper){
-
-	printf("\n");
 
 	// get master_root node
 	struct node *cur;
@@ -233,10 +278,10 @@ int push_node(struct keeper *keeper){
 	struct node *cur = keeper->master_root;
 
 	// figure where to put new node
-	if (cur == NULL){
-		printf("This is the root node!\n");
+	if (cur == NULL) 
 		keeper->master_root = new_node;	
-	} else insert(cur, new_node);
+	else 
+		insert(cur, new_node);
 	printf("\n");
 
 	return 0;
@@ -257,13 +302,16 @@ int menu(){
 	printf("  4. Peek root node\n");
 	printf("  5. Peek smallest node\n");
 	printf("  6. Peek largest node\n");
-	printf("  7. Peek all nodes\n");
-//  printf("  ?. Peek arbitraty node\n");
+	printf("  7. Peek all nodes \t\t(recurs)\n");
 	printf("  -------------------------\n");
-	printf("  0. Exit\n");
+	printf("  8. Search payload value\n");
+	printf("  9. Search payload value \t(recurs)\n");
+	printf("  -------------------------\n");
+	printf("  0. Exit\n\n");
 	printf("> ");
 
 	scanf("%d", &selection);
+	printf("\n");
 	return selection;
 }
 
@@ -302,6 +350,12 @@ int start(){
 					break;
 			case 7:
 					peek_tree(keeper);
+					break;
+			case 8:
+					search_val(keeper->master_root);
+					break;
+			case 9:
+					search_val_recurs(keeper->master_root);
 					break;
 			case 0:
 					break;
