@@ -55,9 +55,6 @@ int peek_right(struct keeper *keeper){
 		printf("--------\n");
 	} else printf("\nList is empty!\n");
 	
-	if (cur->right == NULL)
-		printf("cur->right: NULL\n");
-
 	printf("\n");
 
 	return 0;
@@ -84,27 +81,6 @@ int peek_left(struct keeper *keeper){
 	return 0;
 }
 
-int peek_node(struct node *cur){
-	
-	// peek current node
-	if (cur == NULL){
-		printf("List is empty!\n");
-		return 0;
-	} else {
-		printf("--------\n");
-		printf("id:  %d\n", cur->id);
-		printf("val: %d\n", cur->payload);
-		printf("--------\n");
-	}
-
-	// peek leaf nodes
-	if (cur->left != NULL) peek_node(cur->left);
-	if (cur->right != NULL) peek_node(cur->right);
-
-	return 0;
-}
-
-
 /* Views very top root node (master_root) */
 int peek_root(struct keeper *keeper){
 
@@ -123,20 +99,42 @@ int peek_root(struct keeper *keeper){
 return 0;
 }
 
+int peek_node(struct node *root){
+	
+	// peek current node
+	if (root == NULL){
+		printf("List is empty!\n");
+		return 0;
+	} else {
+		printf("--------\n");
+		printf("id:  %d\n", root->id);
+		printf("val: %d\n", root->payload);
+		printf("--------\n");
+	}
+
+	// peek leaf nodes
+	if (root->left != NULL)
+		peek_node(root->left);
+
+	if (root->right != NULL)
+		peek_node(root->right);
+
+	return 0;
+}
+
 /* Views all nodes in tree */
 int peek_tree(struct keeper *keeper){
+
+	printf("\n");
 
 	// get master_root node
 	struct node *cur;
 	cur = keeper->master_root;
 
 	// if not NULL, send to peek function
-	printf("\n");
-	if (cur == NULL)
-		printf("List is empty!\n");
-	else
-		peek_node(cur);
-	
+	if (cur == NULL) printf("List is empty!\n");
+	else peek_node(cur);
+
 	printf("\n");
 
 	return 0;
@@ -194,9 +192,32 @@ int pop_right(struct keeper *keeper){
 	return 0;
 }
 
-int push_node(struct keeper *keeper){
+void insert(struct node *root, struct node *new_node){
 
-	int user = 0;
+	if (new_node->payload == root->payload){
+		int user = 0;
+		printf("Looks like this node already exists. You can...\n");
+		printf(" (1) add a duplicate to its left\n");
+		printf(" (2) cancel the add\n> ");
+		scanf("%d", &user);
+			if (user != 1)
+				return;
+	}
+
+	// decide if new_node goes left or right
+	if (new_node->payload > root->payload){
+		if (root->right == NULL)
+			root->right = new_node;
+		else insert(root->right, new_node);
+	} else if (new_node->payload < root->payload){
+		if (root->left == NULL)
+			root->left = new_node;
+		else insert(root->left, new_node);
+	}
+
+}
+
+int push_node(struct keeper *keeper){
 
 	// create new node
 	struct node *new_node;
@@ -208,6 +229,8 @@ int push_node(struct keeper *keeper){
 	int id = keeper->top_id+1;
 	keeper->top_id = id;
 	new_node->id = id;
+
+	// give values to node
 	int payload = 0;
 	printf("what value is the payload? (int)\n> ");
 	scanf("%d", &payload);
@@ -218,39 +241,10 @@ int push_node(struct keeper *keeper){
 
 	// figure where to put new node
 	if (cur == NULL){
-		printf("This node is root node!\n");
+		printf("This is the root node!\n");
 		keeper->master_root = new_node;	
-//		keeper->left_tail = new_node;
-//		keeper->right_tail = new_node;
-	} else {
-		// find spot to put new node
-		while(cur != NULL){
-			if (payload == cur->payload){
-				printf("Looks like this node already exists. You can...\n");
-				printf(" (1) add a duplicate to its left\n");
-				printf(" (2) cancel the add\n> ");
-				scanf("%d", &user);
-				if (user != 1)
-					return 0;
-			}
-			if (payload <= cur->payload){
-				if (cur->left == NULL)
-					cur->left == new_node;
-	
-				cur = cur->left;
-			}
-			else if (payload > cur->payload){
-				if (cur->right == NULL)
-					cur->right == new_node;
-	
-				cur = cur->right;
-			}
-		}
-//		cur = new_node;
-
-//		keeper->left_tail = new_node;
-//		keeper->right_tail = new_node;
-	}
+	} else insert(cur, new_node);
+	printf("\n");
 
 	return 0;
 }
@@ -259,8 +253,6 @@ int push_node(struct keeper *keeper){
 int menu(){
 
 	int selection = 0;
-	printf("  - PROGRAM DOES NOTHING -\n");
-	printf("  -------------------------\n");
 	printf("  Select a function:\n");
 	printf("  -------------------------\n");
 	printf("  1. Push node onto tree\n");
