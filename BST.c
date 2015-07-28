@@ -26,6 +26,9 @@ struct node{
  * function prototypes *
  ***********************/
 
+// pre-order
+// in-order
+// post-order
 void search_val_helper(struct node *root, int val);
 void search_val_recurs_helper(struct node *root, int val);
 void search_val(struct node *root);
@@ -45,7 +48,6 @@ void desc();
 
 void search_val_helper(struct node *root, int val){
 
-	
 	while (root != NULL){
 
 		if (root->payload == val){
@@ -217,7 +219,7 @@ void pop_left(struct node *root){
 		free(root);
 		// make parent->left NULL
 	}
-
+	
 	return;
 }
 
