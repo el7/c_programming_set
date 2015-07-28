@@ -120,13 +120,23 @@ int pop_front(struct keeper *keeper){
 /* adds node to keeper in the back (tail) */
 int push_back(struct keeper *keeper){
 
-	int id = keeper->top_id+1;
-	keeper->top_id = id;
-	int payload = 0;
+	// create a new node
 	struct node *new_node;
 	new_node = (struct node*) malloc(sizeof(struct node));
 	new_node->next = NULL;
 
+	// give values to new node
+	int payload = 0;
+	printf("What value is the payload? (int)\n> ");
+	scanf("%d", &payload);
+	new_node->payload = payload;
+
+	// give values to new node
+	int id = keeper->top_id+1;
+	keeper->top_id = id;
+	new_node->id = id;
+
+	// node is first node, or add to (tail)
 	if (keeper->tail == NULL){
 		new_node->prev = NULL;
 		keeper->tail = new_node;	
@@ -137,24 +147,29 @@ int push_back(struct keeper *keeper){
 		keeper->tail = keeper->tail->next;	
 	}
 
-	printf("What value is the payload? (int)\n> ");
-	scanf("%d", &payload);
-	new_node->payload = payload;
-	new_node->id = id;
-	
 	return 0;
 }
 
 /* adds node to keeper in the front (head) */
 int push_front(struct keeper *keeper){
 
-	int payload = 0;
+	// create new node
 	struct node *new_node;
-	int id = keeper->top_id+1;
-	keeper->top_id = id;
 	new_node = (struct node*) malloc(sizeof(struct node));
 	new_node->prev = NULL;
 
+	// give values to new node
+	int payload = 0;
+	printf("What value is the payload? (int)\n> ");
+	scanf("%d", &payload);
+	new_node->payload = payload;
+
+	// give values to new node
+	int id = keeper->top_id+1;
+	keeper->top_id = id;
+	new_node->id = id;
+
+	// node is first node, or add to (head)
 	if (keeper->head == NULL){
 		new_node->next = NULL;
 		keeper->head = new_node;	
@@ -164,12 +179,6 @@ int push_front(struct keeper *keeper){
 		keeper->head->prev = new_node;	
 		keeper->head = keeper->head->prev;	
 	}
-
-	printf("What value is the payload? (int)\n> ");
-	scanf("%d", &payload);
-	new_node->payload = payload;
-	new_node->id = id;
-
 	return 0;
 }
 
