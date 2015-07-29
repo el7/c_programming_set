@@ -40,9 +40,9 @@ void peek_root(struct keeper *keeper);
 void peek_tree(struct keeper *keeper);
 void pop_left(struct node *root);
 void pop_right(struct node *root);
-int push_node(struct keeper *keeper);
+void push_node(struct keeper *keeper);
 int menu();
-int start();
+void start();
 void desc();
 
 
@@ -61,8 +61,6 @@ void search_val_helper(struct node *root, int val){
 			root = root->right;
 
 	}
-
-	return;
 }
 
 void search_val_recurs_helper(struct node *root, int val){
@@ -76,8 +74,6 @@ void search_val_recurs_helper(struct node *root, int val){
 		search_val_recurs_helper(root->left, val);
 		search_val_recurs_helper(root->right, val);
 	}
-		
-	return;
 }
 
 void search_val(struct node *root){
@@ -88,8 +84,6 @@ void search_val(struct node *root){
 	printf("\n");
 	search_val_helper(root, val);
 	printf("\n");
-
-	return;
 }
 
 
@@ -101,8 +95,6 @@ void search_val_recurs(struct node *root){
 	printf("\n");
 	search_val_recurs_helper(root, val);
 	printf("\n");
-
-	return;
 }
 
 /* Views largest valued node (right_tail) */
@@ -122,8 +114,6 @@ void peek_right(struct keeper *keeper){
 	} else printf("\nList is empty!\n");
 	
 	printf("\n");
-
-	return;
 }
 
 
@@ -143,8 +133,6 @@ void peek_left(struct keeper *keeper){
 		printf("--------\n");
 	} else printf("\nList is empty!\n");
 	printf("\n");
-
-	return;
 }
 
 /* Views very top root node (master_root) */
@@ -161,8 +149,6 @@ void peek_root(struct keeper *keeper){
 	} else printf("\nList is empty!\n");
 
 	printf("\n");
-
-	return;
 }
 
 void peek_node(struct node *root){
@@ -181,8 +167,6 @@ void peek_node(struct node *root){
 
 	if (root->right != NULL)
 		peek_node(root->right);
-
-	return;
 }
 
 /* Views all nodes in tree */
@@ -197,8 +181,6 @@ void peek_tree(struct keeper *keeper){
 	else peek_node(cur);
 
 	printf("\n");
-
-	return;
 }
 
 
@@ -219,8 +201,6 @@ void pop_left(struct node *root){
 		free(root);
 		// make parent->left NULL
 	}
-	
-	return;
 }
 
 /* removes largest valued node */
@@ -268,7 +248,7 @@ void insert(struct node *root, struct node *new_node){
 	}
 }
 
-int push_node(struct keeper *keeper){
+void push_node(struct keeper *keeper){
 
 	// create new node
 	struct node *new_node;
@@ -296,8 +276,6 @@ int push_node(struct keeper *keeper){
 	else 
 		insert(cur, new_node);
 	printf("\n");
-
-	return 0;
 }
 
 /* Prints menu, collects user input */
@@ -330,8 +308,9 @@ int menu(){
 
 
 /* Computes the menu for the program */
-int start(){
+void start(){
 
+	// create, malloc, and set values for original tree keeper
 	struct keeper *keeper;
 	keeper = (struct keeper*) malloc(sizeof(struct keeper));
 	keeper->master_root = NULL;
@@ -341,6 +320,7 @@ int start(){
 
 	int selection = 0;
 	do{
+		// obtain user menu selection
 		selection = menu();
 		switch(selection){
 			case 1:
@@ -376,11 +356,9 @@ int start(){
 					break;
 		}
 	}while(selection != 0);
-
-	return 0;
 }
 
-/* Describes the program */
+/* Describes the program / concept */
 void desc(){
 	printf("----------------------------------------------------------------\n");
 	printf("A Binary Searh Tree (BST) is a data structure\n");
