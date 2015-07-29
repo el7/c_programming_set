@@ -224,8 +224,10 @@ void pop_right(struct node *root){
 	return;
 }
 
+/* recursively finds appropriate spot in tree to put node */
 void insert(struct node *root, struct node *new_node){
 
+	// if node already exists, decide what to do.
 	if (new_node->payload == root->payload){
 		int user = 0;
 		printf("Looks like this node already exists. You can...\n");
@@ -236,18 +238,21 @@ void insert(struct node *root, struct node *new_node){
 				return;
 	}
 
-	// decide if new_node goes left or right
-	if (new_node->payload > root->payload){
-		if (root->right == NULL)
-			root->right = new_node;
-		else insert(root->right, new_node);
-	} else if (new_node->payload < root->payload){
-		if (root->left == NULL)
-			root->left = new_node;
+	// if new_node is less than current node
+	if (new_node->payload < root->payload){
+		// if next leaf is empty, add. else, recursion.
+		if (root->left == NULL) root->left = new_node;
 		else insert(root->left, new_node);
-	}
+	} 
+	// if new_node is greater than current node
+	else if (new_node->payload > root->payload){
+		// if next leaf is empty, add. else, recursion.
+		if (root->right == NULL) root->right = new_node;
+		else insert(root->right, new_node);
+	} 
 }
 
+/* creates new node, delegates to insert()  */
 void push_node(struct keeper *keeper){
 
 	// create new node
@@ -270,7 +275,7 @@ void push_node(struct keeper *keeper){
 	// create temp node
 	struct node *cur = keeper->master_root;
 
-	// figure where to put new node
+	// if tree is empty, make master_node. else, send to insert()
 	if (cur == NULL) 
 		keeper->master_root = new_node;	
 	else 
