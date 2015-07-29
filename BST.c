@@ -176,6 +176,13 @@ void peek_tree(struct keeper *keeper){
 	struct node *cur;
 	cur = keeper->master_root;
 
+	// /////////////////////////////////////
+	// SHOULD ASK USER WHAT ORDER THEY WANT:
+	// In-Order
+	// Pre-Order
+	// Post-Order
+	// /////////////////////////////////////
+
 	// if not NULL, send to peek function
 	if (cur == NULL) printf("List is empty!\n");
 	else peek_node(cur);
