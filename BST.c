@@ -5,20 +5,20 @@
  * structures *
  **************/
 
+// helps manage and traverse the tree
 struct keeper{
 	struct node *master_root;
-	struct node *left_tail;		// farthest left  node
-	struct node *right_tail;	// farthest right node
 	int top_id; 
 	
 };
 
+// building blocks for the tree
 struct node{
-	int id;					// node's ID
-	int payload;			// node's value
-	struct node *root;		// 		 root node
-	struct node *left;		// left  leaf node
-	struct node *right;		// right leaf node
+	int id;						// node's ID
+	int payload;				// node's value
+	struct node *root;			// 		 root node
+	struct node *left;			// left  leaf node
+	struct node *right;			// right leaf node
 };
 
 
@@ -26,9 +26,9 @@ struct node{
  * function prototypes *
  ***********************/
 
-// pre-order
-// in-order
-// post-order
+// 	pre-order	?
+// 	in-order	?
+// 	post-order	?
 void search_val_helper(struct node *root, int val);
 void search_val_recurs_helper(struct node *root, int val);
 void search_val(struct node *root);
@@ -46,38 +46,50 @@ void start();
 void desc();
 
 
+/* searches tree for node with particular payload, iteratively */
 void search_val_helper(struct node *root, int val){
 
+	// while root isn't null
 	while (root != NULL){
-
+		// if root's payload equals user's payload, print ID, exit
 		if (root->payload == val){
 			printf("val(%d) found on node with ID(%d)\n", val, root->id);
 			return;
 		}
-		
-		if (root->payload > val)
+		// else if user's payload is larger, iterate root to the right
+		else if (root->payload > val)
 			root = root->left;
+		// else if user's payload is smaller, iterate root to the left
 		else if (root->payload < val)
 			root = root->right;
-
 	}
 }
 
+/* searches tree for node with particular payload, recursively */
 void search_val_recurs_helper(struct node *root, int val){
 
+	// if current root is empty, exit
 	if (root == NULL)
 		return;
-	if (root->payload == val){
+	// if curret root's payload matches, print ID, exit
+	else if (root->payload == val){
 		printf("val(%d) found on node with ID(%d)\n", val, root->id);
 		return;
-	} else {
+	} 
+	// else, recursion
+	else {
+		// recurs with smaller leaf
 		search_val_recurs_helper(root->left, val);
+		// recurs with larger leaf
 		search_val_recurs_helper(root->right, val);
 	}
 }
 
+/* lets user search for node with particular payload, 
+ * delegates to search_val_helper() */
 void search_val(struct node *root){
 	
+	// ask user for payload to search for
 	int val = 0;
 	printf("What payload value would you like to find?\n> ");
 	scanf("%d", &val);
@@ -86,9 +98,11 @@ void search_val(struct node *root){
 	printf("\n");
 }
 
-
+/* lets user search for node with particular payload, 
+ * delegates to search_val_recurs_helper() */
 void search_val_recurs(struct node *root){
 
+	// ask user for payload to search for
 	int val = 0;
 	printf("What payload value would you like to find?\n> ");
 	scanf("%d", &val);
@@ -97,35 +111,40 @@ void search_val_recurs(struct node *root){
 	printf("\n");
 }
 
-/* Views largest valued node (right_tail) */
+/* Views largest valued node, iterative */
 void peek_right(struct keeper *keeper){
 
+	// temp node
 	struct node *cur;
 	cur = keeper->master_root;
 
+	// traverse to largest node
 	while(cur->right != NULL)
 		cur = cur->right;
 
+	// if not null, print info
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
 		printf("val: %d\n", cur->payload);
 		printf("--------\n");
 	} else printf("\nList is empty!\n");
-	
 	printf("\n");
 }
 
 
-/* Views smallest valued node (left_tail) */
+/* Views smallest valued node, iterative */
 void peek_left(struct keeper *keeper){
-
+	
+	// temp node
 	struct node *cur;
 	cur = keeper->master_root;
 
+	// traverse to smallest
 	while(cur->left != NULL)
 		cur = cur->left;
 
+	// if not null, print info
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -138,9 +157,11 @@ void peek_left(struct keeper *keeper){
 /* Views very top root node (master_root) */
 void peek_root(struct keeper *keeper){
 
+	// temp node
 	struct node *cur;
 	cur = keeper->master_root;
 
+	// if not empty, print master_root node info
 	if (cur != NULL){
 		printf("--------\n");
 		printf("id:  %d\n", cur->id);
@@ -151,6 +172,7 @@ void peek_root(struct keeper *keeper){
 	printf("\n");
 }
 
+/* recursive node printer */
 void peek_node(struct node *root){
 	
 	// peek current node
@@ -161,15 +183,16 @@ void peek_node(struct node *root){
 		printf("--------\n");
 	}
 
-	// peek leaf nodes
+	// peek smaller leaf nodes
 	if (root->left != NULL)
 		peek_node(root->left);
 
+	// peek larger leaf nodes
 	if (root->right != NULL)
 		peek_node(root->right);
 }
 
-/* Views all nodes in tree */
+/* Views all nodes in tree, delegates to peek_node() */
 void peek_tree(struct keeper *keeper){
 
 	// get master_root node
@@ -190,8 +213,7 @@ void peek_tree(struct keeper *keeper){
 	printf("\n");
 }
 
-
-/* removes smallest valued node */
+/* removes smallest valued node, recursive */
 void pop_left(struct node *root){
 
 	if (root == NULL){
@@ -213,7 +235,7 @@ void pop_left(struct node *root){
 	}
 }
 
-/* removes largest valued node */
+/* removes largest valued node, recursive */
 void pop_right(struct node *root){
 
 	// if tree is empty, proclaim and exit.
@@ -335,8 +357,6 @@ void start(){
 	struct keeper *keeper;
 	keeper = (struct keeper*) malloc(sizeof(struct keeper));
 	keeper->master_root = NULL;
-	keeper->left_tail = NULL;
-	keeper->right_tail = NULL;
 	keeper->top_id = 0;
 
 	int selection = 0;
