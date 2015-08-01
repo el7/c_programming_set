@@ -1,4 +1,5 @@
-#
+# makefile for abuncha C programs.
+# splash target is dependant on ascii printing program 'toilet'
 
 default: all
 
