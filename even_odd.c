@@ -3,11 +3,13 @@
 
 int even_odd(){
 	int num = 0;
-	
+
+	// user input
 	printf("Enter a number to examine (0 to exit):\n> ");
 	scanf("%d", &num);
 	if (num == 0) return 0;
 
+	// evaluate
 	if (num % 2 != 0) printf("Number is odd\n");
 	else printf("Number is even\n");
 	printf("\n");
